@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
+    environment:
+      POSTGRES_PASSWORD: "usersdb2023"
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-network
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    networks: 
+      - postgres-network
+
+networks:
+  postgres-network:
+    driver: bridge
