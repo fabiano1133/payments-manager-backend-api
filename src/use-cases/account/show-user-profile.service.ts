@@ -1,4 +1,6 @@
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import { IUsersRepository } from 'src/domain/repositories/users-repository.interface';
 import User from 'src/infrastructure/entities/users/user.entity';
 import { ExceptionsService } from 'src/infrastructure/exceptions/exceptions.service';
@@ -15,13 +17,22 @@ export class ShowUserProfileService {
   constructor(
     @Inject(DatabaseUsersRepository)
     private readonly usersRepository: IUsersRepository,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheService: Cache,
   ) {}
 
   async execute(id: string): Promise<User> {
     try {
       const user = await this.usersRepository.showUserProfile(id);
 
-      this.loggerServices.log(`User profile`, `${JSON.stringify(user)}`);
+      await this.cacheService.set(id, user);
+
+      const cacheData = await this.cacheService.get(id);
+
+      this.loggerServices.log(
+        `CACHE_DATA_PROFILE`,
+        `${JSON.stringify(cacheData)}`,
+      );
 
       return user;
     } catch (error) {

@@ -1,7 +1,9 @@
 services:
   postgres:
     image: postgres
+    container_name: postgresdb
     volumes:
+      - ./database/payments-management/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
       - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
     environment:
       POSTGRES_PASSWORD: "usersdb2023"
@@ -9,8 +11,10 @@ services:
       - "5432:5432"
     networks:
       - postgres-network
+
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin-console
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
       PGADMIN_DEFAULT_PASSWORD: "admin"

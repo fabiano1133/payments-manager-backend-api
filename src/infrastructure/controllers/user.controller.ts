@@ -21,6 +21,7 @@ import { AuthGuard } from '../common/guards/auth/auth.guard';
 import { ShowUserProfileService } from 'src/use-cases/account/show-user-profile.service';
 import { Request } from 'express';
 import { UpdateUserIsProService } from 'src/use-cases/account/update-user-ispro.service';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('api/v1/users')
 export class UserController {
@@ -79,8 +80,10 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor, CacheInterceptor)
+  @CacheTTL(60)
+  @CacheKey('user-profile')
   @Get('show-user-profile')
-  @UseInterceptors(ClassSerializerInterceptor)
   async showUserProfile(@Req() req: Request): Promise<User> {
     try {
       const id = req['user'].sub;

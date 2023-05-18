@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { DataSource } from 'typeorm';
 import { UserModule } from './use-cases/account/user.module';
 import { EnvironmentConfigModule } from './infrastructure/config/environment-config/environment-config.module';
@@ -20,6 +21,9 @@ import { PaymentsModule } from './use-cases/payments/payments.module';
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true,
+    }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
     }),
