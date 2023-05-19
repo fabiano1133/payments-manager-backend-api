@@ -19,7 +19,7 @@ env:
   REGISTRY: gcr.io
   # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}
-  IMAGE_NAME: payments-manager-ci-cd/nodejs
+  IMAGE_NAME: southamerica-east1-docker.pkg.dev/payments-management-app/payments-manager-ci-cd
 
 
 jobs:
