@@ -1,13 +1,40 @@
-FROM node:18-alpine
+# FROM node:18-alpine
 
-WORKDIR /user/src/app
+# WORKDIR /user/src/app
 
-COPY . .
+# COPY . .
 
-RUN npm install
+# RUN npm install
 
-RUN npm run build
+# RUN npm run build
+
+# USER node
+
+# CMD ["npm", "run", "start:prod"]
+
+FROM node:18-alpine as builder
+
+ENV NODE_ENV build
+
+WORKDIR /home/node
+
+COPY . /home/node
+
+RUN npm ci \
+    && npm run build \
+    && npm prune --production
+
+# ---
+
+FROM node:16.8-alpine3.11
+
+ENV NODE_ENV production
 
 USER node
+WORKDIR /home/node
 
-CMD ["npm", "run", "start:prod"]
+COPY --from=builder /home/node/package*.json /home/node/
+COPY --from=builder /home/node/node_modules/ /home/node/node_modules/
+COPY --from=builder /home/node/dist/ /home/node/dist/
+
+CMD ["node", "dist/main.js"]

@@ -7,7 +7,7 @@ export class EnvironmentConfigService implements IDatabase {
   constructor(private readonly configService: ConfigService) {}
 
   getDatabaseHost(): string {
-    return this.configService.get<string>('DATABASE_HOST');
+    return this.configService.get<string>('DATABASE_HOST_PROD');
   }
   getDatabasePort(): number {
     return this.configService.get<number>('PORT');

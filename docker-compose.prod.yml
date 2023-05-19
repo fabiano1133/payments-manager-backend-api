@@ -1,5 +1,7 @@
+version: "3.9"
+
 services:
-  db_dev:
+  db_prod:
     image: postgres
     container_name: postgresdb-container
     volumes:
@@ -21,27 +23,31 @@ services:
     ports:
       - "16543:80"
     depends_on:
-      - db_dev
+      - db_prod
     networks: 
       - postgres-network
   
-  app_dev:
+  app_prod:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     image: nodejs
     container_name: app-container
     restart: unless-stopped
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/dist
+      - /home/node/app/node_modules
     env_file:
       - .env
     networks:
       - postgres-network
     depends_on:
-      - db_dev
+      - db_prod
     ports:
       - "8080:8080"
     links:
-      - "db_dev"
+      - "db_prod"
 
 networks:
   postgres-network:
