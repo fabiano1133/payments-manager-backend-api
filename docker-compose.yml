@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres
-    container_name: postgresdb
+    container_name: postgresdb-container
     volumes:
       - ./database/payments-management/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
       - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
@@ -14,7 +14,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin-console
+    container_name: pgadmin-console-container
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
       PGADMIN_DEFAULT_PASSWORD: "admin"
@@ -24,6 +24,24 @@ services:
       - postgres
     networks: 
       - postgres-network
+  
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: app-container
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - postgres-network
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    links:
+      - "postgres"
 
 networks:
   postgres-network:
