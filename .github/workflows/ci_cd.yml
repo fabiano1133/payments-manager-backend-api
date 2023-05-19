@@ -19,7 +19,7 @@ env:
   REGISTRY: gcr.io
   # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}
-  IMAGE_NAME: payments-management-app
+  IMAGE_NAME: payments-manager-ci-cd/nodejs
 
 
 jobs:
