@@ -1,31 +1,31 @@
 version: "3.9"
 
 services:
-  db_prod:
-    image: postgres
-    container_name: postgresdb-container
-    volumes:
-      - ./database/payments-management/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
-      - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
-    environment:
-      POSTGRES_PASSWORD: "usersdb2023"
-    ports:
-      - "5432:5432"
-    networks:
-      - postgres-network
+  # db_prod:
+  #   image: postgres
+  #   container_name: postgresdb-container
+  #   volumes:
+  #     - ./database/payments-management/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
+  #     - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
+  #   environment:
+  #     POSTGRES_PASSWORD: "usersdb2023"
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - postgres-network
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin-console-container
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
-    ports:
-      - "16543:80"
-    depends_on:
-      - db_prod
-    networks: 
-      - postgres-network
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin-console-container
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "admin"
+  #   ports:
+  #     - "16543:80"
+  #   depends_on:
+  #     - db_prod
+  #   networks: 
+  #     - postgres-network
   
   app_prod:
     build:
@@ -36,8 +36,8 @@ services:
     restart: unless-stopped
     volumes:
       - .:/home/node/app
-      - /home/node/app/dist
       - /home/node/app/node_modules
+      - /home/node/app/dist
     env_file:
       - .env
     networks:
@@ -49,6 +49,6 @@ services:
     links:
       - "db_prod"
 
-networks:
-  postgres-network:
-    driver: bridge
+# networks:
+#   postgres-network:
+#     driver: bridge
