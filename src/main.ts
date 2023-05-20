@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new LoggingInterceptor());
 
   await app.listen(process.env.SERVER_PORT, () =>
-    console.log(`Server listening on port ${process.env.SERVER_PORT}`),
+    console.log(`Server listening on port ${process.env.SERVER_PORT}` || 3000),
   );
 }
 bootstrap();

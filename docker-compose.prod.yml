@@ -39,15 +39,15 @@ services:
       - /home/node/app/node_modules
       - /home/node/app/dist
     env_file:
-      - .env
-    networks:
-      - postgres-network
-    depends_on:
-      - db_prod
+      - .env.prod
+    # networks:
+    #   - postgres-network
+    # depends_on:
+    #   - db_prod
     ports:
-      - "8080:8080"
-    links:
-      - "db_prod"
+      - 3000:3000
+    # links:
+    #   - "db_prod"
 
 # networks:
 #   postgres-network:
