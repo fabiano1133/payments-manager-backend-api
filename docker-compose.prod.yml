@@ -1,32 +1,6 @@
 version: "3.9"
 
-services:
-  # db_prod:
-  #   image: postgres
-  #   container_name: postgresdb-container
-  #   volumes:
-  #     - ./database/payments-management/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
-  #     - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
-  #   environment:
-  #     POSTGRES_PASSWORD: "usersdb2023"
-  #   ports:
-  #     - "5432:5432"
-  #   networks:
-  #     - postgres-network
-
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   container_name: pgadmin-console-container
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
-  #     PGADMIN_DEFAULT_PASSWORD: "admin"
-  #   ports:
-  #     - "16543:80"
-  #   depends_on:
-  #     - db_prod
-  #   networks: 
-  #     - postgres-network
-  
+services:  
   app_prod:
     build:
       context: .
@@ -40,15 +14,6 @@ services:
       - /home/node/app/dist
     env_file:
       - .env.prod
-    # networks:
-    #   - postgres-network
-    # depends_on:
-    #   - db_prod
+    
     ports:
       - 3000:3000
-    # links:
-    #   - "db_prod"
-
-# networks:
-#   postgres-network:
-#     driver: bridge
