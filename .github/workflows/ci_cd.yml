@@ -18,7 +18,7 @@ env:
   # REGISTRY: ghcr.io
   REGISTRY: gcr.io
   IMAGE_NAME: payments-management-app/nestjs
-  SERVICE: nestjs
+  SERVICE: payments-management-app/nestjs
   REGION: us-central1
   # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}
@@ -28,7 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
-      digest: ${{ steps.build-and-push.outputs.digest }}
     permissions:
       contents: read
       packages: write
