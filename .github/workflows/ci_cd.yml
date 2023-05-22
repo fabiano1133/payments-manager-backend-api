@@ -17,11 +17,11 @@ env:
   # Use docker.io for Docker Hub if empty
   # REGISTRY: ghcr.io
   REGISTRY: gcr.io
+  IMAGE_NAME: payments-management-app/nestjs
+  SERVICE: nestjs
+  REGION: us-central1
   # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}
-  SERVICE: payments-management-app
-  REGION: us-central1
-  IMAGE_NAME: payments-management-app/nestjs
 
 jobs:
   ci:
