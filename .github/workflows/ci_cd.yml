@@ -18,7 +18,7 @@ env:
   # REGISTRY: ghcr.io
   REGISTRY: gcr.io
   IMAGE_NAME: payments-management-app/nestjs
-  SERVICE: payments-management-app/nestjs
+  SERVICE: payments-manager-container-app
   REGION: us-central1
   # github.repository as <account>/<repo>
   # IMAGE_NAME: ${{ github.repository }}
